@@ -131,6 +131,21 @@ rules:
       color: red
 ```
 
+You can also change the shape name with the `name` command, e.g. `name: New TextBox`. This is
+particularly useful with the "morph" [transitions](#transition), which matches shape names
+beginning with `!!`. For example:
+
+```yaml
+rules:
+  - Bar:
+      name: !!Bar         # Renames the shape "Bar" to "!!Bar"
+      text: New text
+```
+
+This ensures that the morph will match the shape even if it's text changes.
+[Source](https://support.microsoft.com/en-us/office/morph-transition-tips-and-tricks-bc7f48ff-f152-4ee8-9081-d3121788024f)
+
+
 ### Groups
 
 Groups are shapes that contain other shapes. You can apply commands to the group itself (e.g. change its [size or position](#position)), or to the shapes inside a group, like this:
@@ -234,7 +249,7 @@ options are below, e.g. `transition: airplane left`, `transition: fly-through in
 - `gallery`: left|right
 - `glitter`: diamond|hexagon, left|right|top|bottom
 - `honeycomb`
-- `morph`: by-object|by-word|by-char
+- `morph`: by-object|by-word|by-char (see note about using `!!` in [shape names](#shapes))
 - `newsflash`
 - `orbit`: left|right|top|bottom
 - `origami`: left|right
@@ -319,13 +334,12 @@ copying, the values of (`copy.key`, `copy.val`) are set as follows (just like
 - `pd.DataFrame({'x': row1, 'y': row2})` 🡆 `('x', row1)), ('y', row2)`
 - `data.groupby('key')` 🡆 [GroupBy iterator](https://pandas.pydata.org/pandas-docs/stable/reference/groupby.html) with group name and subsetted data
 
-Commands can use the `copy` variable, which has these attributes:
+For each copied slide, the [data variable `copy`](#data) is set. It has these attributes:
 
-- `copy.pos`: 0, 1, 2, ... for each copied slide
+- `copy.pos`: 0, 1, 2, ... for each cloned shape
 - `copy.key`: For lists or tuples, this is the same as `copy.pos`. For dicts, Series, DataFrames, etc, it's the key or index
 - `copy.val`: Value corresponding to `copy.key`
-- `copy.parent`: If a group was copied, and a slide inside the group was copied too, `copy.parent` returns the `copy` object of the parent group
-- `copy.slides`: Currently copied list of slides
+- `copy.slides`: Currently copied slides list
 
 <div class="example">
   <a class="example-demo" href="copy-slide/">Copy slides examples</a>
@@ -370,11 +384,11 @@ content, or add new content (like charts). Here are some common commands:
 
 ### Style
 
-- `fill`: sets fill (background) [color](#color-units), e.g. `f'red'`
-- `stroke`: sets line [color](#color-units), e.g. `f'red'`
-- `fill-opacity`: sets fill transparency on solid color fills. 0 is transparent, 1 is opaque, e.g. `0.5` is half transparent
-- `stroke-opacity`: sets line transparency on solid color strokes.  0 is transparent, 1 is opaque, e.g. `0.5` is half transparent
-- `stroke-width`: sets width of the line in [length units](#length-units), e.g. `f'0.5 pt'`
+- `fill`: sets fill (background) [color](#color-units), e.g. `fill: f'red'`
+- `stroke`: sets line [color](#color-units), e.g. `stroke: f'red'`
+- `fill-opacity`: sets fill transparency on solid color fills. 0 is transparent, 1 is opaque, e.g. `fill-opacity: 0.5` is half transparent
+- `stroke-opacity`: sets line transparency on solid color strokes.  0 is transparent, 1 is opaque, e.g. `stroke-opacity: 0.5` is half transparent
+- `stroke-width`: sets width of the line in [length units](#length-units), e.g. `stroke-width: f'0.5 pt'`
 
 <div class="example">
   <a class="example-demo" href="groups/">Style example (from Groups example)</a>
@@ -384,9 +398,9 @@ content, or add new content (like charts). Here are some common commands:
 
 ### Image
 
-- `image`: set image of a picture to a file or URL, e.g. `new-pic.png` or `https://picsum.photos/200`. Retains aspect ratio, width and position. May change the height
-- `image-width`: sets width in [length units](#length-units), e.g. `3 inches`. Retains aspect ratio and position (top and left). May change the height
-- `image-height`: sets height in [length units](#length-units), e.g. `3 inches`. Retains aspect ratio and position (top and left). May change the width
+- `image`: set image of a picture to a file or URL, e.g. `image: new-pic.png` or `image: https://picsum.photos/200`. Retains aspect ratio, width and position. May change the height
+- `image-width`: sets width in [length units](#length-units), e.g. `image-width: 3 inches`. Retains aspect ratio and position (top and left). May change the height
+- `image-height`: sets height in [length units](#length-units), e.g. `image-height: 3 inches`. Retains aspect ratio and position (top and left). May change the width
 
 <div class="example">
   <a class="example-demo" href="clone-shapes/">Image example (from Clone shape example)</a>
@@ -415,7 +429,7 @@ content, or add new content (like charts). Here are some common commands:
 
 ### Text
 
-- `text`: sets the shape's [text and format](#text-format), e.g. `text: <p><a italic="y">New</a> <a bold="y">text</a></p>`
+- `text`: sets the shape's [text and format](#text-format), e.g. `text: f'<p><a italic="y">New</a> <a bold="y">text</a></p>'`
 - `replace`: updates the shape's [text and format](#text-format), e.g. `replace: {old: new, (rabbit|fox): <a color="red">animal</a>}`.
     - Replace only works within a run, i.e. for words that have the same formatting. For example, in
       "some<u>where</u>", "where" is underlined. You cannot replace "somewhere". But you can replace
@@ -490,7 +504,7 @@ the variables (`clone.key`, `clone.val`) are set as follows (just like [`copy-sl
 - pandas DataFrame, e.g. `pd.DataFrame({'x': row1, 'y': row2})` 🡆 `('x', row1)), ('y', row2)`
 - pandas GroupBy, e.g. `data.groupby('key')` 🡆 [GroupBy iterator](https://pandas.pydata.org/pandas-docs/stable/reference/groupby.html) with group name and subsetted data
 
-Commands can use the `clone` variable, which has these attributes:
+For each cloned shape, the [data variable `clone`](#data) is set. It has these attributes:
 
 - `clone.pos`: 0, 1, 2, ... for each cloned shape
 - `clone.key`: For lists or tuples, this is the same as `clone.pos`. For dicts, Series, DataFrames, etc, it's the key or index
@@ -503,11 +517,75 @@ Commands can use the `clone` variable, which has these attributes:
   <a class="example-src" href="https://github.com/gramexrecipes/gramex-guide/blob/tree/pptxhandler/clone-shape/">Source</a>
 </div>
 
+### Table
+
+To update table text or style using data, use the `table:` command. Example:
+
+```yaml
+data:
+  products: {url: $YAMLPATH/products.csv}
+rules:
+  - Table 1:
+      table:                                          # Apply table command
+        data: products.head(10)                       # Show top 10 rows from products dataset
+        text:
+          Sales: f'<p>{cell.val:.0} $mn</p>'          # Format sales column as $mn
+          Margin: f'<p>{cell.val:0.1%}</p>'           # Format margin column as %
+        fill: 'red' if cell.row.Margin < 0 else 'green'   # Negative margin rows are colored red
+```
+
+The `table:` command supports these sub-commands:
+
+- `data`: sets the table's data using a DataFrame, `e.g. data: pd.read_excel('data.xlsx')`. If not
+  specified, it's auto-populated from the PPTX table text.
+- `header-row`: turns header row on or off, e.g. `header-row: false`
+- `total-row`: turns special formatting for last row on or off, e.g. `total-row: true`
+- `first-column`: turns special formatting for first column on or off, e.g. `first-column: true`
+- `last-column`: turns special formatting for last column on or off, e.g. `last-column: true`
+
+You can set each cell's properties with these sub-command:
+
+- `text`: sets each cell's [text and format](#text-format), e.g. `text: f'<p><a italic="y">New</a> <a bold="y">text</a></p>'`
+- `bold`: makes the text bold or normal. It can be true/yes/y/1 or false/no/n/0/"", e.g. `bold: true`
+- `color`: sets the text color in [color units](#color-units), e.g. `color: f'red'`
+- `fill`: sets fill (background) [color](#color-units), e.g. `fill: f'red'`
+- `fill-opacity`: sets fill transparency on solid color fills. 0 is transparent, 1 is opaque, e.g. `0.5` is half transparent
+- `font-name`: sets the font name. It can be Arial, Calibri, or any valid font name, e.g. `font-name: f'Arial'`
+- `font-size`: sets the font size in [length units](#length-units), e.g. `font-size: f'18 pt'`
+- `italic`: makes the text italicized or normal. It can be true/yes/y/1 or false/no/n/0/"", e.g. `italic: true`
+- `underline`: underlines the text or makes it normal. It can be true/yes/y/1 or false/no/n/0/"", e.g. `underline: true`
+
+You can set the above cell properties either with a single expression, or an expression per column:
+
+```yaml
+rules:
+  - Table 1:
+      table:
+        # You can set every cell's property with an expression.
+        # E.g. this makes every row red if the "Margin" column is negative, else it's green
+        fill: 'red' if cell.row.Margin < 0 else 'green'
+        # You can set a column's property with an expression, too.
+        # E.g. this formats the Sales column and Margin column differently
+        text:
+          Sales: f'<p>{cell.val:.0} $mn</p>'          # Format sales column as $mn
+          Margin: f'<p>{cell.val:0.1%}</p>'           # Format margin column as %
+```
+
+For each cell, the [data variable `cell`](#data) is set. It has these attributes:
+
+- `cell.val`: value of each cell
+- `cell.index`: DataFrame index of the cell
+- `cell.column`: DataFrame column name of the cell
+- `cell.row`: row that contains the current cell (as a Series)
+- `cell.data`: DataFrame that contains the current cell
+- `cell.pos.row`: row number
+- `cell.pos.column`: column number
+
+
 ### Debug
 
-- `name:` changes the name of the shape, e.g. `name: !!Bar` lets "morph" [transitions](#transition)
-  match shape names beginning with `!!`.
-  [Source](https://support.microsoft.com/en-us/office/morph-transition-tips-and-tricks-bc7f48ff-f152-4ee8-9081-d3121788024f)
+If PPTXHandler fails, a good way to debug is to
+
 - `print:` prints the result of an expression using [data](#data), e.g. `print: shape.name` prints
   the current shape name. Print multiple values as a list, e.g. `print: [shape.name, clone.key]`
 
@@ -676,6 +754,12 @@ They will be over-ridden.)
 - `slide`: the current slide being processed, e.g. `slide.shapes.title`
 - `shape`: the current shape being processed, e.g. `shape.width` or `slide.name`
 - `handler`: the PPTXHandler instance (if available), e.g. `handler.get_arg('title')`
+
+They may also use these variables where available:
+
+- `copy`: info on the currently [copied slide](#copy-slides), e.g. `copy.key`, `copy.val`
+- `clone`: info on the currently [cloned shape](#clone-shapes), e.g. `clone.key`, `clone.val`
+- `cell`: info on the currently processed cell in a [table](#table), e.g. `cell.val`
 
 ## PPTGen Library
 
