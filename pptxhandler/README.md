@@ -840,7 +840,8 @@ Any command that sets a color, e.g. `fill: f'red'`, accepts colors in one of the
 - a named color, like `red`
 - a hex value, like `#f80` or `#ff8800`
 - an RGB value, like `rgb(255, 255, 0)`
-- a tuple or list of RGB values, like `(255, 255, 0)` or `[255, 255, 0]`
+- a tuple or list of integer RGB values, like `(255, 255, 0)` or `[255, 255, 0]`
+- a tuple or list of float RGB values, like `(1.0, 0.5, 0.0)` or `[1.0, 0.5, 0.0]`
 - a [theme color][theme-colors], like `ACCENT_1`, `ACCENT_2`, `BACKGROUND_1`, `DARK_1`, `LIGHT_2`
 - a [theme color][theme-colors] with a brightness modifier, like `ACCENT_1+40`, which is 40%
   brighter than Accent 1, or `ACCENT_2-20` which is 20% darker than Accent 2
