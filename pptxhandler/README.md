@@ -536,14 +536,17 @@ rules:
 
 The `table:` command supports these sub-commands:
 
-- `data`: sets the table's data using a DataFrame, `e.g. data: pd.read_excel('data.xlsx')`. If not
-  specified, it's auto-populated from the PPTX table text.
+- `data`: sets the table's shape using a **DataFrame**, `e.g. data: pd.read_excel('data.xlsx')`. (Lists, dicts, etc won't work)
+  - The PPTX table will have the same number of rows and columns as the `data`. You still need to set cell text using `text:` below
+  - If `data` has more rows, the last PPTX table row is cloned to add rows. Same for columns
+  - If `data` has less rows, the last PPTX table rows are deleted. Same for columns
+  - If `data` is not specified, it's auto-populated from the PPTX table text
 - `header-row`: turns header row on or off, e.g. `header-row: false`
 - `total-row`: turns special formatting for last row on or off, e.g. `total-row: true`
 - `first-column`: turns special formatting for first column on or off, e.g. `first-column: true`
 - `last-column`: turns special formatting for last column on or off, e.g. `last-column: true`
 
-You can set each cell's properties with these sub-command:
+You can set each cell's properties with these sub-commands:
 
 - `text`: sets each cell's [text and format](#text-format), e.g. `text: f'<p><a italic="y">New</a> <a bold="y">text</a></p>'`
 - `bold`: makes the text bold or normal. It can be true/yes/y/1 or false/no/n/0/"", e.g. `bold: true`
