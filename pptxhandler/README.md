@@ -339,7 +339,7 @@ For each copied slide, the [data variable `copy`](#data) is set. It has these at
 - `copy.pos`: 0, 1, 2, ... for each cloned shape
 - `copy.key`: For lists or tuples, this is the same as `copy.pos`. For dicts, Series, DataFrames, etc, it's the key or index
 - `copy.val`: Value corresponding to `copy.key`
-- `copy.slides`: Currently copied slides list
+- `copy.slides`: Currently copied [PPTX slides list](https://python-pptx.readthedocs.io/en/latest/api/slides.html#slides-objects), e.g. `copy.slides[0].shapes`
 
 <div class="example">
   <a class="example-demo" href="copy-slide/">Copy slides examples</a>
@@ -510,7 +510,7 @@ For each cloned shape, the [data variable `clone`](#data) is set. It has these a
 - `clone.key`: For lists or tuples, this is the same as `clone.pos`. For dicts, Series, DataFrames, etc, it's the key or index
 - `clone.val`: Value corresponding to `clone.key`
 - `clone.parent`: If a group was cloned, and a shape inside the group was cloned too, `clone.parent` returns the `clone` object of the parent group
-- `clone.shape`: Currently cloned shape
+- `clone.shape`: Currently cloned [PPTX shape](https://python-pptx.readthedocs.io/en/latest/api/shapes.html#shape-objects-autoshapes), e.g. `clone.shape.width`
 
 <div class="example">
   <a class="example-demo" href="clone-shape/">Clone shape example</a>
@@ -548,7 +548,8 @@ The `table:` command supports these sub-commands:
 
 You can set each cell's properties with these sub-commands:
 
-- `text`: sets each cell's [text and format](#text-format), e.g. `text: f'<p><a italic="y">New</a> <a bold="y">text</a></p>'`
+- `text`: sets each cell's [text and format](#text-format), e.g. `text: f'<p><a italic="y">{cell.val}</a> <a bold="y">$ mn</a></p>'`.
+  By default, this just displays the data value. This is the same as `text: cell.val`
 - `bold`: makes the text bold or normal. It can be true/yes/y/1 or false/no/n/0/"", e.g. `bold: true`
 - `color`: sets the text color in [color units](#color-units), e.g. `color: f'red'`
 - `fill`: sets fill (background) [color](#color-units), e.g. `fill: f'red'`
@@ -583,6 +584,7 @@ For each cell, the [data variable `cell`](#data) is set. It has these attributes
 - `cell.data`: DataFrame that contains the current cell
 - `cell.pos.row`: row number
 - `cell.pos.column`: column number
+- `cell.cell`: currently rendered [PPTX cell object](https://python-pptx.readthedocs.io/en/latest/api/table.html#cell-objects), e.g. `cell.cell.text`
 
 
 ### Debug
