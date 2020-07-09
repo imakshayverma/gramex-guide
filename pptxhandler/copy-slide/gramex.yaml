@@ -7,7 +7,7 @@ url:
       source: $YAMLPATH/template.pptx
       data:
         sales:
-          url: '$YAMLPATH/sales.csv'
+          url: $YAMLPATH/sales.csv
           transform: data.set_index('month')
         max_sales: {function: sales.values.max()}
       # Copy slides, update data and apply morph transition

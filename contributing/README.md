@@ -44,16 +44,23 @@ The tests are in 2 folders:
 - [tests/](https://github.com/gramener/gramex/tree/master/tests/)
   has URL-based tests that run after starting the Gramex server.
 
-To run the tests, just run `python setup.py nosetests` for the first time.
-Thereafter, you can run `nosetests`.
+Run `make test-setup` for the first time. Then you can run `nosetests`.
 
-The tests take a long time. To test a subset, use `nosetests tests.<module>:<ClassName>.<method>`. For example:
+The tests take long. To test a subset, use `nosetests tests.<module>:<ClassName>.<method>`. For example:
 
 ```bash
+make test-setup                             # Run once to install dependencies
 nosetests testlib                           # Only test the libraries
 nosetests testlib.test_data                 # Only run testlib/test_data.py
 nosetests testlib.test_data:TestFilter      # Only run the TestFilter class
 nosetests testlib.test_data:TestFilter.test_get_engine      # Run a single method
+```
+
+You can also see the code coverage and how long each test takes
+
+```bash
+NOSE_WITH_COVERAGE=1 nosetests      # Show code coverage. Store line-by-line results in htmlcov/
+NOSE_WITH_TIMER=1 nosetests         # Show time taken for each test
 ```
 
 ## Update Gramex Community Edition

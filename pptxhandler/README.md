@@ -18,8 +18,6 @@ Here are examples of what PPTXHandler can create. Click to see details.
 [![FMCG revenue breakup](fmcg.png)](https://gramener.com/fmcg/)
 [![Bar chart race](bar-chart-race.gif)](https://blog.gramener.com/bar-chart-race-in-powerpoint/)
 
-[TOC]
-
 ## Usage
 
 There are two versions of PPTXHandler.
@@ -89,7 +87,13 @@ Less important keys are:
   - If `only=3`, only the 3rd slide will be used
   - If `only=[3, 5, 6]`, only the 3rd, 5th and 6th slide will be used
 
-## Rules
+------------------------------------------------------------------------
+
+[TOC]
+
+------------------------------------------------------------------------
+
+# Rules
 
 A rule defines how to modify the source presentation. For example:
 
@@ -104,7 +108,7 @@ rules:                              # Apply these rules
 
 A rule can pick one or more shape names, and apply one or more [commands](#commands) to each shape.
 
-### Shapes
+## Shapes
 
 A `rule:` is a dictionary of shape names.
 
@@ -146,7 +150,7 @@ This ensures that the morph will match the shape even if it's text changes.
 [Source](https://support.microsoft.com/en-us/office/morph-transition-tips-and-tricks-bc7f48ff-f152-4ee8-9081-d3121788024f)
 
 
-### Groups
+## Groups
 
 Groups are shapes that contain other shapes. You can apply commands to the group itself (e.g. change its [size or position](#position)), or to the shapes inside a group, like this:
 
@@ -165,7 +169,7 @@ rules:
   <a class="example-src" href="https://github.com/gramexrecipes/gramex-guide/blob/tree/pptxhandler/groups/">Source</a>
 </div>
 
-### Slide filters
+## Slide filters
 
 By default, rules are applied to all slides. You can restrict changes to specific slides with:
 
@@ -192,7 +196,7 @@ rules:
     Title: {text: f'X'}
 ```
 
-### Transition
+## Transition
 
 Add `transition:` to a rule to set the transition for all [applicable slides](#slide-filters).
 
@@ -302,7 +306,7 @@ You can also specify transitions as a dict with 3 keys:
   <a class="example-src" href="https://github.com/gramexrecipes/gramex-guide/blob/tree/pptxhandler/transition/">Source</a>
 </div>
 
-### Copy slides
+## Copy slides
 
 You can repeat a slide, changing the layouts or content based on data. This is used to:
 
@@ -347,12 +351,12 @@ For each copied slide, the [data variable `copy`](#data) is set. It has these at
 </div>
 
 
-## Commands
+# Commands
 
 Shapes can be changed using 1 or more commands. These commands can change the shape's style and
 content, or add new content (like charts). Here are some common commands:
 
-### Position
+## Position
 
 - `top`: sets top (Y) position in [length units](#length-units), e.g. `f'3 inches'`
 - `left`: sets left (X) position in [length units](#length-units), e.g. `f'3 inches'`
@@ -382,7 +386,7 @@ content, or add new content (like charts). Here are some common commands:
 - `adjustment3`: sets 3rd shape adjustment
 - `adjustment4`: sets 4th shape adjustment
 
-### Style
+## Style
 
 - `fill`: sets fill (background) [color](#color-units), e.g. `fill: f'red'`
 - `stroke`: sets line [color](#color-units), e.g. `stroke: f'red'`
@@ -396,7 +400,7 @@ content, or add new content (like charts). Here are some common commands:
 </div>
 
 
-### Image
+## Image
 
 - `image`: set image of a picture to a file or URL, e.g. `image: new-pic.png` or `image: https://picsum.photos/200`. Retains aspect ratio, width and position. May change the height
 - `image-width`: sets width in [length units](#length-units), e.g. `image-width: 3 inches`. Retains aspect ratio and position (top and left). May change the height
@@ -407,7 +411,7 @@ content, or add new content (like charts). Here are some common commands:
   <a class="example-src" href="https://github.com/gramexrecipes/gramex-guide/blob/tree/pptxhandler/clone-shapes/">Source</a>
 </div>
 
-### Link
+## Link
 
 - `link`: on click, shape opens another slide, file or URL, e.g. `link: 4`, `link: f'https://gramener.com/'`
 - `hover`: on hover, shape opens another slide, file or URL, e.g. `link: 4`, `link: f'https://gramener.com/'`
@@ -427,7 +431,7 @@ content, or add new content (like charts). Here are some common commands:
   <a class="example-src" href="https://github.com/gramexrecipes/gramex-guide/blob/tree/pptxhandler/link/">Source</a>
 </div>
 
-### Text
+## Text
 
 - `text`: sets the shape's [text and format](#text-format), e.g. `text: f'<p><a italic="y">New</a> <a bold="y">text</a></p>'`
 - `replace`: updates the shape's [text and format](#text-format), e.g. `replace: {old: new, (rabbit|fox): <a color="red">animal</a>}`.
@@ -446,7 +450,7 @@ content, or add new content (like charts). Here are some common commands:
   <a class="example-src" href="https://github.com/gramexrecipes/gramex-guide/blob/tree/pptxhandler/text/">Source</a>
 </div>
 
-### Text format
+## Text format
 
 The text for [`text:`](#text) may include `<p>` tags for for paragraphs, which may contain `<a>`
 tags for runs. Similarly, the new text for [`replace:`](#text) may include a single `<a>` tags for
@@ -454,11 +458,11 @@ the run. (These look like HTML, but they're not.)
 
 Paragraphs (`<p>`) can have attributes like `<p align="right" level="2">`. Valid attributes are:
 
-- `align=` is the paragraph alignment. It can be left, center, right, justify, justify_low, (justify with low word spacing), distribute (for Japanese characters), thai_distribute, e.g. `align="right"`
-- `level=` is the indentation level number from 0 (default) to 8, e.g. `level="2"`
-- `line-spacing=` is the line spacing in [length units](#length-units), e.g. `line-spacing="3 pt"`
-- `space-after=` is the space after the paragraph in [length units](#length-units), e.g. `space-after="18 pt"`
-- `space-before=` is the space before the paragraph in [length units](#length-units), e.g. `space-before="18 pt"`
+- `align=` sets the horizontal alignment. It can be left, center, right, justify, justify_low, (justify with low word spacing), distribute (for Japanese characters), thai_distribute, e.g. `align="right"`
+- `level=` sets the indentation level number from 0 (default) to 8, e.g. `level="2"`
+- `line-spacing=` sets the line spacing in [length units](#length-units), e.g. `line-spacing="3 pt"`
+- `space-after=` sets the space after the paragraph in [length units](#length-units), e.g. `space-after="18 pt"`
+- `space-before=` sets the space before the paragraph in [length units](#length-units), e.g. `space-before="18 pt"`
 
 Runs (`<a>`) can have attributes like `<a href="https://gramener.com/" bold="y" italic="y">`. Valid attributes are:
 
@@ -482,7 +486,84 @@ tag is closed.
   <a class="example-src" href="https://github.com/gramexrecipes/gramex-guide/blob/tree/pptxhandler/text-format/">Source</a>
 </div>
 
-### Clone shapes
+## Table
+
+To update table text or style using data, use the `table:` command. Example:
+
+```yaml
+data:
+  products: {url: $YAMLPATH/products.csv}
+rules:
+  - Table 1:
+      table:                                          # Apply table command
+        data: products.head(10)                       # Show top 10 rows from products dataset
+        text:
+          Sales: f'<p>{cell.val:.0} $mn</p>'          # Format sales column as $mn
+          Margin: f'<p>{cell.val:0.1%}</p>'           # Format margin column as %
+        fill: 'red' if cell.row.Margin < 0 else 'green'   # Negative margin rows are colored red
+```
+
+The `table:` command supports these sub-commands:
+
+- `data`: sets the table's shape using a **DataFrame**, `e.g. data: pd.read_excel('data.xlsx')`. (Lists, dicts, etc won't work)
+  - The PPTX table will have the same number of rows and columns as the `data`. You still need to set cell text using `text:` below
+  - If `data` has more rows, the last PPTX table row is cloned to add rows. Same for columns
+  - If `data` has less rows, the last PPTX table rows are deleted. Same for columns
+  - If `data` is not specified, it's auto-populated from the PPTX table text
+- `header-row`: turns header row on or off, e.g. `header-row: false`
+- `total-row`: turns special formatting for last row on or off, e.g. `total-row: true`
+- `first-column`: turns special formatting for first column on or off, e.g. `first-column: true`
+- `last-column`: turns special formatting for last column on or off, e.g. `last-column: true`
+
+You can set each cell's properties with these sub-commands:
+
+- `text`: sets each cell's [text and format](#text-format), e.g. `text: f'<p><a italic="y">{cell.val}</a> <a bold="y">$ mn</a></p>'`.
+  By default, this just displays the data value. This is the same as `text: cell.val`
+- `align`: sets the horizontal alignment. It can be left, center, right, justify, justify_low, (justify with low word spacing), distribute (for Japanese characters), thai_distribute, e.g. `align: right`
+- `bold`: makes the text bold or normal. It can be true/yes/y/1 or false/no/n/0/"", e.g. `bold: true`
+- `color`: sets the text color in [color units](#color-units), e.g. `color: f'red'`
+- `fill`: sets fill (background) [color](#color-units), e.g. `fill: f'red'`
+- `fill-opacity`: sets fill transparency on solid color fills. 0 is transparent, 1 is opaque, e.g. `0.5` is half transparent
+- `font-name`: sets the font name. It can be Arial, Calibri, or any valid font name, e.g. `font-name: f'Arial'`
+- `font-size`: sets the font size in [length units](#length-units), e.g. `font-size: f'18 pt'`
+- `italic`: makes the text italicized or normal. It can be true/yes/y/1 or false/no/n/0/"", e.g. `italic: true`
+- `underline`: underlines the text or makes it normal. It can be true/yes/y/1 or false/no/n/0/"", e.g. `underline: true`
+- `vertical-align`: sets the vertical alignment. It can be top, middle, or bottom, e.g. `vertical-align: middle`
+
+You can set the above cell properties either with a single expression, or an expression per column:
+
+```yaml
+rules:
+  - Table 1:
+      table:
+        # You can set every cell's property with an expression.
+        # E.g. this makes every row red if the "Margin" column is negative, else it's green
+        fill: 'red' if cell.row.Margin < 0 else 'green'
+        # You can set a column's property with an expression, too.
+        # E.g. this formats the Sales column and Margin column differently
+        text:
+          Sales: f'<p>{cell.val:.0} $mn</p>'          # Format sales column as $mn
+          Margin: f'<p>{cell.val:0.1%}</p>'           # Format margin column as %
+```
+
+For each cell, the [data variable `cell`](#data) is set. It has these attributes:
+
+- `cell.val`: value of each cell
+- `cell.index`: DataFrame index of the cell
+- `cell.column`: DataFrame column name of the cell
+- `cell.row`: row that contains the current cell (as a Series)
+- `cell.data`: DataFrame that contains the current cell
+- `cell.pos.row`: row number
+- `cell.pos.column`: column number
+- `cell.cell`: currently rendered [PPTX cell object](https://python-pptx.readthedocs.io/en/latest/api/table.html#cell-objects), e.g. `cell.cell.text`
+
+<div class="example">
+  <a class="example-demo" href="text-format/">Table example</a>
+  <a class="example-src" href="https://github.com/gramexrecipes/gramex-guide/blob/tree/pptxhandler/table/">Table</a>
+</div>
+
+
+## Clone shapes
 
 Use `clone-shape:` to clone a shape for as many times specified. For example:
 
@@ -517,77 +598,8 @@ For each cloned shape, the [data variable `clone`](#data) is set. It has these a
   <a class="example-src" href="https://github.com/gramexrecipes/gramex-guide/blob/tree/pptxhandler/clone-shape/">Source</a>
 </div>
 
-### Table
 
-To update table text or style using data, use the `table:` command. Example:
-
-```yaml
-data:
-  products: {url: $YAMLPATH/products.csv}
-rules:
-  - Table 1:
-      table:                                          # Apply table command
-        data: products.head(10)                       # Show top 10 rows from products dataset
-        text:
-          Sales: f'<p>{cell.val:.0} $mn</p>'          # Format sales column as $mn
-          Margin: f'<p>{cell.val:0.1%}</p>'           # Format margin column as %
-        fill: 'red' if cell.row.Margin < 0 else 'green'   # Negative margin rows are colored red
-```
-
-The `table:` command supports these sub-commands:
-
-- `data`: sets the table's shape using a **DataFrame**, `e.g. data: pd.read_excel('data.xlsx')`. (Lists, dicts, etc won't work)
-  - The PPTX table will have the same number of rows and columns as the `data`. You still need to set cell text using `text:` below
-  - If `data` has more rows, the last PPTX table row is cloned to add rows. Same for columns
-  - If `data` has less rows, the last PPTX table rows are deleted. Same for columns
-  - If `data` is not specified, it's auto-populated from the PPTX table text
-- `header-row`: turns header row on or off, e.g. `header-row: false`
-- `total-row`: turns special formatting for last row on or off, e.g. `total-row: true`
-- `first-column`: turns special formatting for first column on or off, e.g. `first-column: true`
-- `last-column`: turns special formatting for last column on or off, e.g. `last-column: true`
-
-You can set each cell's properties with these sub-commands:
-
-- `text`: sets each cell's [text and format](#text-format), e.g. `text: f'<p><a italic="y">{cell.val}</a> <a bold="y">$ mn</a></p>'`.
-  By default, this just displays the data value. This is the same as `text: cell.val`
-- `bold`: makes the text bold or normal. It can be true/yes/y/1 or false/no/n/0/"", e.g. `bold: true`
-- `color`: sets the text color in [color units](#color-units), e.g. `color: f'red'`
-- `fill`: sets fill (background) [color](#color-units), e.g. `fill: f'red'`
-- `fill-opacity`: sets fill transparency on solid color fills. 0 is transparent, 1 is opaque, e.g. `0.5` is half transparent
-- `font-name`: sets the font name. It can be Arial, Calibri, or any valid font name, e.g. `font-name: f'Arial'`
-- `font-size`: sets the font size in [length units](#length-units), e.g. `font-size: f'18 pt'`
-- `italic`: makes the text italicized or normal. It can be true/yes/y/1 or false/no/n/0/"", e.g. `italic: true`
-- `underline`: underlines the text or makes it normal. It can be true/yes/y/1 or false/no/n/0/"", e.g. `underline: true`
-
-You can set the above cell properties either with a single expression, or an expression per column:
-
-```yaml
-rules:
-  - Table 1:
-      table:
-        # You can set every cell's property with an expression.
-        # E.g. this makes every row red if the "Margin" column is negative, else it's green
-        fill: 'red' if cell.row.Margin < 0 else 'green'
-        # You can set a column's property with an expression, too.
-        # E.g. this formats the Sales column and Margin column differently
-        text:
-          Sales: f'<p>{cell.val:.0} $mn</p>'          # Format sales column as $mn
-          Margin: f'<p>{cell.val:0.1%}</p>'           # Format margin column as %
-```
-
-For each cell, the [data variable `cell`](#data) is set. It has these attributes:
-
-- `cell.val`: value of each cell
-- `cell.index`: DataFrame index of the cell
-- `cell.column`: DataFrame column name of the cell
-- `cell.row`: row that contains the current cell (as a Series)
-- `cell.data`: DataFrame that contains the current cell
-- `cell.pos.row`: row number
-- `cell.pos.column`: column number
-- `cell.cell`: currently rendered [PPTX cell object](https://python-pptx.readthedocs.io/en/latest/api/table.html#cell-objects), e.g. `cell.cell.text`
-
-
-### Debug
+## Debug
 
 If PPTXHandler fails, a good way to debug is to
 
@@ -595,7 +607,7 @@ If PPTXHandler fails, a good way to debug is to
   the current shape name. Print multiple values as a list, e.g. `print: [shape.name, clone.key]`
 
 
-### Register
+## Register
 
 Register let you create your own custom commands. It can run any Python code using 3 variables:
 
@@ -617,6 +629,8 @@ rules:
       my_method: ...                        # Any object can be passed to my_method
 ```
 
+
+# Reference
 
 ## Expressions
 
@@ -766,6 +780,15 @@ They may also use these variables where available:
 - `clone`: info on the currently [cloned shape](#clone-shapes), e.g. `clone.key`, `clone.val`
 - `cell`: info on the currently processed cell in a [table](#table), e.g. `cell.val`
 
+## Color scales
+
+To convert numbers into continuous colors, you can
+
+```yaml
+fill: color(norm)
+
+```
+
 ## PPTGen Library
 
 You can access the [pptgen][pptgen] library to change presentations programmatically.
@@ -816,9 +839,7 @@ target = pptgen(
 target.save('slide1.pptx')  # Save the target
 ```
 
-## Units
-
-### Length units
+## Length units
 
 Any command that sets a length, e.g. `width: 5`, uses "inches" by default. You can change the unit
 to "cm" using `width: 5 cm`. Or, you can change the default unit from "inches" to "cm" by passing
@@ -835,7 +856,7 @@ to "cm" using `width: 5 cm`. Or, you can change the default unit from "inches" t
 
 [length-units]: https://python-pptx.readthedocs.io/en/latest/api/util.html#pptx.util.Length
 
-### Color units
+## Color units
 
 Any command that sets a color, e.g. `fill: f'red'`, accepts colors in one of these formats:
 
