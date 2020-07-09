@@ -2,7 +2,8 @@
 
 The [Kauffman Indicators of Entrepreneurship](https://indicators.kauffman.org/) show
 entrepreneurial trends in the US. Their [entry in the Information is Beautiful
-awards(https://www.informationisbeautifulawards.com/showcase/4296-kauffman-indicators-of-entrepreneurship) shows the percentage of population that starts a new business.
+awards](https://www.informationisbeautifulawards.com/showcase/4296-kauffman-indicators-of-entrepreneurship)
+shows the percentage of population that starts a new business.
 
 ![Rate of New Entrepreneurs](kauffman-indicators-chart.png){.img-fluid}
 
@@ -18,8 +19,7 @@ It has 51 rectangles named "Rectangle 6", "Rectangle 7", ... "Rectangle 56". The
 numbers don't matter. We will identify them by the 2-letter codes in the text.
 
 It also has text boxes for the title, sources, etc. Since we will create one slide for each year,
-the only one that matters is the "Caption", which reads "BY STATE, 2019". The rest stays the same
-across years.
+we'll also change "Caption" ever slide, which reads "BY STATE, 2019".
 
 ## Create the data
 
@@ -88,6 +88,15 @@ Next, let's change the *text* of each `Rectangle *` shape.
 This creates a result like this for each state:
 
 ![Picture of what a state rectangle's text will look like](state-shape.png)
+
+Finally, change the caption every slide. `{copy.key}` is the year.
+
+```yaml
+          Caption:
+            text: f'BY STATE, {copy.key}'
+```
+
+[This is the final configuration](gramex.yaml.source){.source}
 
 
 [data]: https://indicators.kauffman.org/wp-content/uploads/sites/2/2020/05/Kauffman-Indicators-of-Early-stage-Entrepreneurship-%E2%80%93-Data-2019.csv
