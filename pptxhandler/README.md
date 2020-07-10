@@ -481,6 +481,10 @@ Runs (`<a>`) can have attributes like `<a href="https://gramener.com/" bold="y" 
 You can't use `<p>` inside another `<p>`, nor an `<a>` inside another `<a>`. If you do, the previous
 tag is closed.
 
+Note: Don't use run attributes (like `bold=`, `color=`) on paragraphs. They work on paragraphs, but
+are over-ridden by run attributes. E.g. If your source PPTX had a bold run, setting `bold: n` on
+the para has no visible effect, since the bold run overrides it.
+
 <div class="example">
   <a class="example-demo" href="text-format/">Text format example</a>
   <a class="example-src" href="https://github.com/gramexrecipes/gramex-guide/blob/tree/pptxhandler/text-format/">Source</a>
