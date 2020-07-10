@@ -13,7 +13,7 @@ shows the percentage of population that starts a new business.
 
 Start by creating a [template.pptx](template.pptx) that has all the 50 U.S. states + DC laid out.
 
-[![State map template](initial-template.png){.img-fluid}](template.pptx)
+[![State map template](template.png){.img-fluid}](template.pptx)
 
 It has 51 rectangles named "Rectangle 6", "Rectangle 7", ... "Rectangle 56". The exact names and
 numbers don't matter. We will identify them by the 2-letter codes in the text.
@@ -34,7 +34,7 @@ The relevant columns are:
 - `year`: Year
 - `rne`: Rate of new entrepreneurs
 
-## Create the configuration
+## Create the rules
 
 Let's set up a basic `gramex.yaml` file that loads the template and the data.
 

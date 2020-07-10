@@ -14,11 +14,12 @@ PPTXHandler makes it easy for users to:
 
 Here are examples of what PPTXHandler can create. Click to see details.
 
+[![Rate of entrepreneurship](entrepreneurship/output.svg){: height=180}](entrepreneurship/)
 [![App store sales](appstore.png)](https://gramener.com/appstore/appstore.pptx)
 [![FMCG revenue breakup](fmcg.png)](https://gramener.com/fmcg/)
 [![Bar chart race](bar-chart-race.gif)](https://blog.gramener.com/bar-chart-race-in-powerpoint/)
 
-## Usage
+## About
 
 There are two versions of PPTXHandler.
 
@@ -69,14 +70,30 @@ cart: 142
   <a class="example-src" href="https://github.com/gramexrecipes/gramex-guide/blob/tree/pptxhandler/sales-funnel/">Source</a>
 </div>
 
-The most important keys for PPTXHandler are:
+## Tutorials
+
+Here are some tutorials
+
+### Rate of Entrepreneurship
+
+Re-create a portion of the [Kauffman Indicators of Rate of New Entrepreneurship](https://indicators.kauffman.org/indicator/rate-of-new-entrepreneurs) in PowerPoint.
+
+[![Rate of entrepreneurship](entrepreneurship/output.svg){: width=320}](entrepreneurship/)
+
+### Bar chart race
+
+
+
+## Usage
+
+PPTXHandler accepts a set of keys as `kwargs`. The most used keys are:
 
 - `version`: always set this to 2. Otherwise, [PPTXHandler v1](v1/) is used
 - `source`: path to the source or template PPTX, e.g. `$YAMLPATH/source.pptx`
 - `data`: dataset dictionary. Rules can use data to change slides. See [how to specify the dataset](#data), e.g. `data: {products: {url: data.csv}}`
 - `rules`: list of rules to modify the source using data. See [how to specify rules](#rules)
 
-Less important keys are:
+Less used keys are:
 
 - `target`: path to save target PPTX
 - `unit`: (optional) set the [unit of length][length] used by width, height, etc. See [length unit](#length-unit)
